@@ -15,13 +15,11 @@
 //int (WINAPI* Real_Recv)(SOCKET s, char* buf, int len, int flags) = recv;
 //int WINAPI Mine_Send(SOCKET s, const char* buf, int len, int flags);
 //int WINAPI Mine_Recv(SOCKET s, char* buf, int len, int flags);
-//
-//static VOID(WINAPI* TrueSleep)(DWORD dwMilliseconds) = Sleep;
 
 BOOL(WINAPI* RealProcessNext)(HANDLE hSnapshot, LPPROCESSENTRY32 lppe) = Process32Next;
 
 using namespace std;
-BOOL OurProcess32Next(HANDLE hSnapshot, LPPROCESSENTRY32 lppe) {
+BOOL WINAPI OurProcess32Next(HANDLE hSnapshot, LPPROCESSENTRY32 lppe) {
     cout << "yo" << endl;
     return TRUE;
 }
