@@ -55,7 +55,7 @@ int main(void)
         cout << "ttd not found." << endl;
     else
         cout << "unexpected error." << endl;
-    system("pause");
 
+    system("pause");
     return 0;
 }
