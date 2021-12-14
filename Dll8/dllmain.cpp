@@ -16,7 +16,7 @@
 //int WINAPI Mine_Send(SOCKET s, const char* buf, int len, int flags);
 //int WINAPI Mine_Recv(SOCKET s, char* buf, int len, int flags);
 
-BOOL(WINAPI* RealProcessNext)(HANDLE hSnapshot, LPPROCESSENTRY32 lppe) = Process32Next;
+static BOOL (WINAPI* RealProcessNext)(HANDLE hSnapshot, LPPROCESSENTRY32 lppe) = Process32Next;
 
 using namespace std;
 BOOL WINAPI OurProcess32Next(HANDLE hSnapshot, LPPROCESSENTRY32 lppe) {
@@ -26,8 +26,9 @@ BOOL WINAPI OurProcess32Next(HANDLE hSnapshot, LPPROCESSENTRY32 lppe) {
 
 
 BOOL WINAPI DllMain(HINSTANCE, DWORD dwReason, LPVOID) {
+    cout << "version 1.0" << endl;
     cout << dwReason << endl;
-    switch (dwReason) {
+    /*switch (dwReason) {
     case DLL_PROCESS_ATTACH:
         DetourTransactionBegin();
         DetourUpdateThread(GetCurrentThread());
@@ -42,7 +43,24 @@ BOOL WINAPI DllMain(HINSTANCE, DWORD dwReason, LPVOID) {
         DetourTransactionCommit();
         break; 
     }
-    
+    */
+    if (DetourIsHelperProcess()) {
+        return TRUE;
+    }
 
+    if (dwReason == DLL_PROCESS_ATTACH) {
+        DetourRestoreAfterWith();
+
+        DetourTransactionBegin();
+        DetourUpdateThread(GetCurrentThread());
+        DetourAttach(&(PVOID&)RealProcessNext, &OurProcess32Next);
+        DetourTransactionCommit();
+    }
+    else if (dwReason == DLL_PROCESS_DETACH) {
+        DetourTransactionBegin();
+        DetourUpdateThread(GetCurrentThread());
+        DetourDetach(&(PVOID&)RealProcessNext, &OurProcess32Next);
+        DetourTransactionCommit();
+    }
     return TRUE;
 }

@@ -73,6 +73,8 @@ int main(int, char* []) {
 
 				BOOL writeMemorySuccess = WriteProcessMemory(hProcess, llParam, fullPath, strlen(fullPath), NULL);
 				HANDLE createThredSucceed = CreateRemoteThread(hProcess, NULL, NULL, (LPTHREAD_START_ROUTINE)libAddr, llParam, NULL, NULL);
+				system("pause");
+
 				CloseHandle(hProcess);
 				cout << "done injection" << endl;
 			}
