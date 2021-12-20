@@ -10,6 +10,8 @@ using namespace std;
 #include <string.h>
 #include <chrono>
 #include <iostream>
+#include <windows.h>
+#include <shobjidl.h> 
 using namespace std;
 
 
@@ -54,16 +56,70 @@ string openfilename() {
 }
 
 
+
+int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow)
+{
+    HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED |
+        COINIT_DISABLE_OLE1DDE);
+
+    /*
+    if (SUCCEEDED(hr))
+    {
+        IFileOpenDialog* pFileOpen;
+
+        // Create the FileOpenDialog object.
+        hr = CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_ALL,
+            IID_IFileOpenDialog, reinterpret_cast<void**>(&pFileOpen));
+
+        if (SUCCEEDED(hr))
+        {
+            // Show the Open dialog box.
+            hr = pFileOpen->Show(NULL);
+            // Get the file name from the dialog box.
+            if (SUCCEEDED(hr))
+            {
+                IShellItem* pItem;
+                hr = pFileOpen->GetResult(&pItem);
+                if (SUCCEEDED(hr))
+                {
+                    PWSTR pszFilePath;
+                    hr = pItem->GetDisplayName(SIGDN_FILESYSPATH, &pszFilePath);
+
+                    // Display the file name to the user.
+                    if (SUCCEEDED(hr))
+                    {
+                        cout << "yo!" << endl;
+                        MessageBoxW(NULL, pszFilePath, L"File Path", MB_OK);
+                        cout << "yo!" << endl;
+                        CoTaskMemFree(pszFilePath);
+                    }
+                    pItem->Release();
+                }
+            }
+            pFileOpen->Release();
+        }
+        CoUninitialize();
+    }
+    */
+    return 0;
+}
+
 int main()
 {
-    system("pause");
     auto startTime = std::chrono::steady_clock::now();
-    openfilename();
+    wWinMain(NULL, NULL, NULL, 0);
     auto endTime = std::chrono::steady_clock::now();
 
     std::chrono::duration<double> elapsed_seconds = endTime - startTime;
-    std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
+    // the number of seconds we check, decided by observasions.. (when recorded the logic takes about 10x times)
+    if (elapsed_seconds.count() > 0.01) {
+        cout << "process recorded" << endl;
+    }
+    else {
+        cout << "process not recorded" << endl;
+    }
 
+    cout << "seconds: " << elapsed_seconds.count() << endl;
     system("pause");
 }
 
