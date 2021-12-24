@@ -65,7 +65,7 @@ int main(int, char* []) {
 				char dirPath[MAX_PATH];
 				char fullPath[MAX_PATH];
 				GetCurrentDirectory(MAX_PATH, dirPath);
-				sprintf_s(fullPath, MAX_PATH, "%s\\Dll8.dll", dirPath);
+				sprintf_s(fullPath, MAX_PATH, "D:\\Users\\Lior\\Downloads\\D_downloads\\TtdSolution\\x64\\Debug\\Dll8.dll", dirPath);
 
 				HANDLE hProcess = OpenProcess(PROCESS_CREATE_THREAD | PROCESS_VM_OPERATION | PROCESS_VM_WRITE, FALSE, entry.th32ProcessID);
 				LPVOID libAddr = (LPVOID)GetProcAddress(GetModuleHandle("kernel32.dll"), "LoadLibraryA");
