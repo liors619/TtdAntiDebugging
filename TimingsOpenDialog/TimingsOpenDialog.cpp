@@ -1,9 +1,7 @@
 // TimingsOpenDialog.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-
 using namespace std;
-
 
 // Returns an empty string if dialog is canceled
 #include <windows.h>
@@ -12,8 +10,8 @@ using namespace std;
 #include <iostream>
 #include <windows.h>
 #include <shobjidl.h> 
-using namespace std;
 
+using namespace std;
 
 wchar_t* convertCharArrayToLPCWSTR(const char* charArray)
 {
@@ -30,32 +28,6 @@ LPWSTR converConstCharPointerToLpwstr(const char* str)
     LPWSTR ptr = wtext;
     return ptr;
 }
-
-
-
-// Returns an empty string if dialog is canceled
-string openfilename() {
-    OPENFILENAME ofn;
-    char fileName[MAX_PATH] = "";
-    ZeroMemory(&ofn, sizeof(ofn));
-
-    ofn.lStructSize = sizeof(OPENFILENAME);
-    ofn.hwndOwner = NULL;
-    ofn.lpstrFilter = convertCharArrayToLPCWSTR("All Files (*.*)\0*.*\0");
-    ofn.lpstrFile = converConstCharPointerToLpwstr(fileName);
-    ofn.nMaxFile = MAX_PATH;
-    ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
-    ofn.lpstrDefExt = convertCharArrayToLPCWSTR("");
-
-    string fileNameStr;
-
-    if (GetOpenFileName(&ofn))
-        fileNameStr = fileName;
-
-    return fileNameStr;
-}
-
-
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow)
 {
