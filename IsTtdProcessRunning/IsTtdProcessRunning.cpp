@@ -43,6 +43,7 @@ bool IsProcessRunning(string executableName) {
 int main()
 {
     while (true) {
+        Sleep(200);
         bool b = IsProcessRunning("TTD.exe");
         if (b)
             cout << "TTD.exe found\n";
