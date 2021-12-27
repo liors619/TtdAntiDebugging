@@ -30,7 +30,7 @@ VOID startup(std::string exePath, TCHAR* argv[])
 
     std::string str = "";
     LPSTR args = const_cast<char*>(str.c_str());
-  
+
 
     // start the program up
     CreateProcess(
@@ -53,12 +53,12 @@ VOID startup(std::string exePath, TCHAR* argv[])
 int main(int argc, TCHAR* argv[])
 {
     // options one: can choose the name so probably the best one
-    startup("C:\\Users\\Lior\\source\\repos\\TtdSolution\\x64\\Debug\\GetParentProcessName.exe", argv);
+    startup("D:\\Users\\Lior\\Downloads\\D_downloads\\TtdSolution\\x64\\Debug\\EndlessLoopProject.exe", argv);
     system("pause"); //dont work without the waiting
 
     // second options: parent process name will be "cmd" and cannot be changed
     //system("C:\\Users\\Lior\\source\\repos\\TtdSolution\\x64\\Debug\\GetParentProcessName.exe");
-    
+
     // third option - doesnt work, cant find parent process
     //the child process cant find the parent and its not good to us cause we cant choose its name
     //HWND dummyHWND = ::CreateWindowA("STATIC", "dummy", WS_VISIBLE, 0, 0, 100, 100, NULL, NULL, NULL, NULL);
