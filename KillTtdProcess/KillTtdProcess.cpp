@@ -49,10 +49,15 @@ void KillProcess(string executableName) {
 
 }
 
+void DeleteRecordFile() {
+    std::remove("file1.txt"); 
+}
+
 int main()
 {
-    KillProcess("TTD.exe");
-    //KillProcess("DbgX.Shell.exe");
+    //KillProcess("TTD.exe");
+    KillProcess("DbgX.Shell.exe");
+    DeleteRecordFile();
     system("pause");
 }
 

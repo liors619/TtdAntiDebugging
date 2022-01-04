@@ -54,14 +54,8 @@ BOOL WINAPI DllMain(HINSTANCE, DWORD dwReason, LPVOID) {
 */
 #include "pch.h"
 
-#include <WinSock2.h>
-#include <WS2tcpip.h>
-#include <windows.h>
-#include <detours.h>
 
-#include <iostream>
-#include <winDOws.h>
-#include <tchar.h>
+#include <detours.h>
 #include <string>
 #include <TlHelp32.h>
 
