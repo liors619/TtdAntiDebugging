@@ -21,10 +21,9 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{067ddcf4-328d-4f0b-8b76-6ea2349ac9dc}</ProjectGuid>
-    <RootNamespace>KillTtdProcess</RootNamespace>
+    <ProjectGuid>{a93be0ed-4f81-420d-a0c8-a636511a3cb3}</ProjectGuid>
+    <RootNamespace>RemoveRecordFileWithAnotherProcess</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>KillTtdProcessAndRemoveRecordFile</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -140,12 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="KillTtdProcessAndRemoveRecordFile.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RemoveRecordFileWithAnotherProcess\RemoveRecordFileWithAnotherProcess.vcxproj">
-      <Project>{a93be0ed-4f81-420d-a0c8-a636511a3cb3}</Project>
-    </ProjectReference>
+    <ClCompile Include="RemoveRecordFileWithAnotherProcess.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

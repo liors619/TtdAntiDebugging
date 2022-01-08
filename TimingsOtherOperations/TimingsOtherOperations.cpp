@@ -37,7 +37,7 @@ void OpenAndCloseFiles() {
 }
 
 void LoadAndUnloadLibraries() {
-    for (size_t i = 0; i < 10000; i++)
+    for (size_t i = 0; i < 50000; i++)
     {
         HMODULE hNtdll = LoadLibraryA("ntdll.dll");
         int unloadResult = FreeLibrary(hNtdll);
