@@ -1,44 +1,21 @@
-//
-// // MAKE THE COMMENT SO IT WONT FAIL OUR BUILD WHEN WE ON 64BIT IN OTHER PROJECTS
-//#include <iostream>
-//#include <windows.h>
-//#include <tlhelp32.h>
-//#include <tchar.h>
-//#include <string>
-//
-//using namespace std;
-//bool IsDebugged()
+//BOOL isDebugged = TRUE;
+//__try
 //{
-//    __try
+//    __asm
 //    {
-//        __asm
-//        {
-//            pushfd
-//            mov dword ptr[esp], 0x100
-//            popfd
-//            nop
-//        }
-//        return true;
-//    }
-//    __except (GetExceptionCode() == EXCEPTION_SINGLE_STEP
-//        ? EXCEPTION_EXECUTE_HANDLER
-//        : EXCEPTION_CONTINUE_EXECUTION)
-//    {
-//        return false;
+//        pushfd
+//        or dword ptr[esp], 0x100 // set the Trap Flag 
+//        popfd                    // Load the value into EFLAGS register
+//        nop
 //    }
 //}
-//
-//int main()
+//__except (EXCEPTION_EXECUTE_HANDLER)
 //{
-//    bool b = IsDebugged();
-//    int value = 0;
-//    if (b) {
-//        cout << "Debugger Found\n";
-//        value = 10;
-//    }
-//    else {
-//        cout << "Debugger not found\n";
-//        value = 30;
-//    }
-//    system("pause");
+//    // If an exception has been raised – debugger is not present
+//    isDebugged = FALSE;
 //}
+//if (isDebugged)
+//{
+//    std::cout << "Stop debugging program!" << std::endl;
+//    exit(-1);
+//} It was originally published on https ://www.apriorit.com/
