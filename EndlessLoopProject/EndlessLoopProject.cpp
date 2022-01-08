@@ -8,7 +8,7 @@ int main()
 {
     while (true) {
         printf("something\n");
-        Sleep(2000);
+        Sleep(1000);
     }
 }
 
