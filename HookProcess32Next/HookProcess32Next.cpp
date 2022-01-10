@@ -58,7 +58,7 @@ int main(int, char* []) {
 
 	if (Process32First(snapshot, &entry) == TRUE) {
 		while (Process32Next(snapshot, &entry) == TRUE) {
-			if (_stricmp(entry.szExeFile, "IsTtdProcessRunning.exe") == 0) {
+			if (_stricmp(entry.szExeFile, "FindWindow.exe") == 0 || _stricmp(entry.szExeFile, "IsTtdProcessRunning.exe") == 0) {
 				cout << "find process to inject the dll to" << endl;
 				EnableDebugPriv();
 

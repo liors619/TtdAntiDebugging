@@ -65,6 +65,12 @@ static LONG dwSlept = 0;
 //
 static VOID(WINAPI* TrueSleep)(DWORD dwMilliseconds) = Sleep;
 static BOOL(WINAPI* RealProcessNext)(HANDLE hSnapshot, LPPROCESSENTRY32 lppe) = Process32NextW;
+static HWND(WINAPI* TrueFindWindowA)(LPCSTR lpClassName, LPCSTR lpWindowName) = FindWindowA;
+
+HWND WINAPI OurFindWindowA(LPCSTR lpClassName, LPCSTR lpWindowName) {
+    printf("our find window method :)\n");
+    return NULL;
+}
 
 // Detour function that replaces the Sleep API.
 //
@@ -102,6 +108,7 @@ BOOL WINAPI DllMain(HINSTANCE hinst, DWORD dwReason, LPVOID reserved)
         DetourTransactionBegin();
         DetourUpdateThread(GetCurrentThread());
         DetourAttach(&(PVOID&)RealProcessNext, OurProcess32Next);
+        DetourAttach(&(PVOID&)TrueFindWindowA, OurFindWindowA);
         DetourAttach(&(PVOID&)TrueSleep, TimedSleep);
         DetourTransactionCommit();
     }
@@ -109,6 +116,7 @@ BOOL WINAPI DllMain(HINSTANCE hinst, DWORD dwReason, LPVOID reserved)
         DetourTransactionBegin();
         DetourUpdateThread(GetCurrentThread());
         DetourDetach(&(PVOID&)RealProcessNext, OurProcess32Next);
+        DetourDetach(&(PVOID&)TrueFindWindowA, OurFindWindowA);
         DetourDetach(&(PVOID&)TrueSleep, TimedSleep);
         DetourTransactionCommit();
     }

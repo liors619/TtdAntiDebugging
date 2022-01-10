@@ -9,11 +9,13 @@ using namespace std;
 
 int main()
 {
+    system("pause");
+
     if (NULL != FindWindowA(NULL, "Recording")) {
-        cout << "debugger found" << endl;
+        cout << "recording found" << endl;
     }
     else {
-        cout << "debugger not found" << endl;
+        cout << "recording not found" << endl;
     }
 
     system("pause");
