@@ -97,8 +97,6 @@ void KillProcess(string executableName) {
     const auto process_to_kill = OpenProcess(PROCESS_TERMINATE, false, process_id);
     TerminateProcess(process_to_kill, 1);
     CloseHandle(process_to_kill);
-
-
 }
 
 bool IsFileExists(const std::string& name) {
@@ -108,7 +106,7 @@ bool IsFileExists(const std::string& name) {
 
 // we can remove only run to remove the recording
 // we remove the out so the next time they try to record our program it'll get the number 01 
-void DeleteRecordFile() {
+void DeleteRecordFiles() {
     if (IsFileExists("D:\\Users\\Lior\\Downloads\\D_downloads\\ttdProject\\Records\\RemoveRecordFileWithAnotherProcess01.run")){
         if (std::remove("D:\\Users\\Lior\\Downloads\\D_downloads\\ttdProject\\Records\\RemoveRecordFileWithAnotherProcess01.run") == 0) {
             std::remove("D:\\Users\\Lior\\Downloads\\D_downloads\\ttdProject\\Records\\RemoveRecordFileWithAnotherProcess01.out");
@@ -129,7 +127,7 @@ int main(int argc, TCHAR* argv[])
     Sleep(1000);
     KillProcess("DbgX.Shell.exe"); //kill windbg process
     Sleep(1000);
-    DeleteRecordFile();
+    DeleteRecordFiles();
     startup("D:\\Users\\Lior\\Downloads\\D_downloads\\TtdSolution\\x64\\Debug\\RemoveRecordFileWithAnotherProcess.exe", argv);
 }
 

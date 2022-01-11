@@ -32,7 +32,6 @@ DWORD getParentPID(DWORD pid)
 
 int main(int argc, char* argv[])
 {
-
     DWORD pid, parentProcessPid;
     int e;
     char fname[MAX_PATH] = { 0 };
