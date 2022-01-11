@@ -60,7 +60,8 @@ bool IsRecorded() {
 
 int main(int argc, TCHAR* argv[])
 {
-    TryDeleteRecordFiles();
+
+
     std::cout << "Hello World!\n";
     while (true) {
         Sleep(8000);
