@@ -129,6 +129,7 @@ void KillWinDbgAndDeleteRecordFiles()
 {
     cout << "kill windbg process..." << endl;
     Sleep(1000);
+    // there can be more than 1 windbg
     KillProcess("DbgX.Shell.exe"); //kill windbg process
     Sleep(1000);
     cout << "search for recordFiles..." << endl;

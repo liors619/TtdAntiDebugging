@@ -5,7 +5,7 @@
 #include <chrono>
 #include <fstream>
 #include <windows.h>
-#include<thread>
+#include <thread>
 
 using namespace std;
 
@@ -37,7 +37,7 @@ void OpenAndCloseFiles() {
 }
 
 void LoadAndUnloadLibraries() {
-    for (size_t i = 0; i < 50000; i++)
+    for (size_t i = 0; i < 10000; i++)
     {
         HMODULE hNtdll = LoadLibraryA("ntdll.dll");
         int unloadResult = FreeLibrary(hNtdll);
@@ -66,7 +66,7 @@ int main()
         std::chrono::steady_clock::time_point startTime;
         std::chrono::steady_clock::time_point endTime;
 
-        //system("pause");
+        system("pause");
 
         startTime = std::chrono::steady_clock::now();
         RunExceptionThrowing();
@@ -74,7 +74,7 @@ int main()
         elapsed_seconds = endTime - startTime;
         cout << "exception time in seconds: " << elapsed_seconds.count() << endl;
 
-        //system("pause");
+        system("pause");
 
         startTime = std::chrono::steady_clock::now();
         NewAndDelete();
@@ -82,7 +82,7 @@ int main()
         elapsed_seconds = endTime - startTime;
         cout << "create and delete objects time in seconds: " << elapsed_seconds.count() << endl;
 
-        //system("pause");
+        system("pause");
 
         startTime = std::chrono::steady_clock::now();
         OpenAndCloseFiles();
@@ -92,13 +92,15 @@ int main()
         //cout << "open and close files time in ticks: " << elapsed_ticks.count() << endl;
         cout << "open and close files time in seconds: " << elapsed_seconds.count() << endl;
 
-        //system("pause");
+        system("pause");
 
         startTime = std::chrono::steady_clock::now();
         LoadAndUnloadLibraries();
         endTime = std::chrono::steady_clock::now();
         elapsed_seconds = endTime - startTime;
         cout << "load and unload libraries time in seconds: " << elapsed_seconds.count() << endl;
+
+        system("pause");
 
         startTime = std::chrono::steady_clock::now();
         CreateAndRunThreads();

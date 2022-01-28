@@ -1,3 +1,5 @@
+//#include <windows.h>
+//
 //BOOL isDebugged = TRUE;
 //__try
 //{
@@ -19,3 +21,4 @@
 //    std::cout << "Stop debugging program!" << std::endl;
 //    exit(-1);
 //} It was originally published on https ://www.apriorit.com/
+

@@ -9,8 +9,6 @@ using namespace std;
 
 int main()
 {
-    system("pause");
-
     if (NULL != FindWindowA(NULL, "Recording")) {
         cout << "recording found" << endl;
     }
