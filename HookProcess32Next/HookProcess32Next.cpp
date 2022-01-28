@@ -12,6 +12,47 @@
 
 using namespace std;
 
+std::wstring s2ws(const std::string& s)
+{
+	int len;
+	int slength = (int)s.length() + 1;
+	len = MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, 0, 0);
+	wchar_t* buf = new wchar_t[len];
+	MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, buf, len);
+	std::wstring r(buf);
+	delete[] buf;
+	return r;
+}
+
+PROCESS_INFORMATION CreateProcessInPauseMode(std::string exePath, WCHAR* argv[])
+{
+	STARTUPINFOW si;
+	PROCESS_INFORMATION pi;
+
+	ZeroMemory(&si, sizeof(si));
+	si.cb = sizeof(si);
+	ZeroMemory(&pi, sizeof(pi));
+
+	// Start the child process. 
+	if (!CreateProcessW(
+		s2ws(exePath).c_str(),   // No module name (use command line)
+		argv[1],        // Command line
+		NULL,           // Process handle not inheritable
+		NULL,           // Thread handle not inheritable
+		FALSE,          // Set handle inheritance to FALSE
+		CREATE_SUSPENDED | CREATE_NEW_CONSOLE,              // No creation flags
+		NULL,           // Use parent's environment block
+		NULL,           // Use parent's starting directory 
+		&si,            // Pointer to STARTUPINFO structure
+		&pi)           // Pointer to PROCESS_INFORMATION structure
+		)
+	{
+		printf("CreateProcess failed (%d).\n", GetLastError());
+	}
+
+	return pi;
+}
+
 void EnableDebugPriv() {
 	HANDLE hToken;
 	LUID luid;
@@ -50,7 +91,9 @@ wchar_t* convertCharArrayToLPCWSTR(const char* charArray)
 	return wString;
 }
 
-int main(int, char* []) {
+int main(int, WCHAR* argv[]) {
+	PROCESS_INFORMATION pi = CreateProcessInPauseMode("D:\\Users\\Lior\\Downloads\\D_downloads\\TtdSolution\\x64\\Debug\\FindWindow.exe", argv);
+
 	PROCESSENTRY32 entry;
 	entry.dwSize = sizeof(PROCESSENTRY32);
 
@@ -59,7 +102,7 @@ int main(int, char* []) {
 	if (Process32First(snapshot, &entry) == TRUE) {
 		while (Process32Next(snapshot, &entry) == TRUE) {
 			if (_stricmp(entry.szExeFile, "FindWindow.exe") == 0 || _stricmp(entry.szExeFile, "IsTtdProcessRunning.exe") == 0) {
-				cout << "find process to inject the dll to" << endl;
+				cout << "find process to inject the dll to: " << entry.szExeFile <<  endl;
 				EnableDebugPriv();
 
 				char dirPath[MAX_PATH];
@@ -73,16 +116,24 @@ int main(int, char* []) {
 
 				BOOL writeMemorySuccess = WriteProcessMemory(hProcess, llParam, fullPath, strlen(fullPath), NULL);
 				HANDLE createThredSucceed = CreateRemoteThread(hProcess, NULL, NULL, (LPTHREAD_START_ROUTINE)libAddr, llParam, NULL, NULL);
-				system("pause");
 
 				CloseHandle(hProcess);
 				cout << "done injection" << endl;
 			}
 		}
 	}
-	system("pause");
 
 	CloseHandle(snapshot);
+
+	system("pause");
+	ResumeThread(pi.hThread);
+
+	// Wait until child process exits.
+	WaitForSingleObject(pi.hProcess, INFINITE);
+
+	// Close process and thread handles. 
+	CloseHandle(pi.hProcess);
+	CloseHandle(pi.hThread);
 
 	return 0;
 }
