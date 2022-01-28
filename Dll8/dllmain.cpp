@@ -97,7 +97,7 @@ BOOL WINAPI OurProcess32Next(HANDLE hSnapshot, LPPROCESSENTRY32 lppe) {
 
 BOOL WINAPI DllMain(HINSTANCE hinst, DWORD dwReason, LPVOID reserved)
 {
-    printf("inject version 1.02\n");
+    //printf("inject version 1.02\n");
     if (DetourIsHelperProcess()) {
         return TRUE;
     }
