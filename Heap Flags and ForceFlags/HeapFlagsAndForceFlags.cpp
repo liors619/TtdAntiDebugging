@@ -37,6 +37,7 @@ bool check() {
 
 int main()
 {
+    system("pause");
     auto is_debugged = check();
     if (is_debugged) {
         cout << "debugger found" << endl;

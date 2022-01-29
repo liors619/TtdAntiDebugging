@@ -23,6 +23,7 @@ bool Check()
 
 int main()
 {
+    system("pause");
     bool b = Check();
     if (b)
         cout << "Debugger Found\n";

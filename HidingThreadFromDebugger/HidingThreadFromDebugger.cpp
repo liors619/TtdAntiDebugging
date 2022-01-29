@@ -58,6 +58,7 @@ inline bool HideThread(HANDLE hThread)
 
 int main()
 {
+    system("pause");
     std::thread t1(threadFunc);
     t1.join();
     system("pause");
@@ -65,6 +66,7 @@ int main()
 
 void threadFunc() {
     HideThread(GetCurrentThread());
+    // if the method success we should see the "sometimes" prints
     printf("something\n");
     printf("something\n");
     printf("something\n");

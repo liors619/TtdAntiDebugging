@@ -61,6 +61,7 @@ void CreateAndRunThreads() {
 
 int main()
 {
+    system("pause");
     while (true) {
         std::chrono::duration<double> elapsed_seconds;
         std::chrono::steady_clock::time_point startTime;

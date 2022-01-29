@@ -7,6 +7,7 @@ int IsDebugged();
 
 int main()
 {
+    system("pause");
     auto is_debugged = IsDebugged();
     if (is_debugged == 1) {
         cout << "debugger found" << endl;
