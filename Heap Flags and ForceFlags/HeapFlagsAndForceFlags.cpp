@@ -12,12 +12,8 @@ using namespace std;
 bool check() {
     PPEB pPeb = (PPEB)__readgsqword(0x60);
     PVOID pHeapBase = (PVOID)(*(PDWORD_PTR)((PBYTE)pPeb + 0x30));
-    DWORD dwHeapFlagsOffset = true
-        ? 0x70
-        : 0x14;
-    DWORD dwHeapForceFlagsOffset = true
-        ? 0x74
-        : 0x18;
+    DWORD dwHeapFlagsOffset = 0x70;
+    DWORD dwHeapForceFlagsOffset = 0x74;
 
     PDWORD pdwHeapFlags = (PDWORD)((PBYTE)pHeapBase + dwHeapFlagsOffset);
     PDWORD pdwHeapForceFlags = (PDWORD)((PBYTE)pHeapBase + dwHeapForceFlagsOffset);
