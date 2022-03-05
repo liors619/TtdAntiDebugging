@@ -69,12 +69,12 @@ int IsDebugged() {
             if (NT_SUCCESS(status))
             {
                 PPEB peb_addr = pbi.PebBaseAddress;
-                PDWORD something = (PDWORD)(((PBYTE)peb_addr) + 0xBC);
-                DWORD value = *something;
-                cout << "NtGlobalFlag value is: " << value << endl;
-                if (value == 0)
+                PDWORD NtGlobalFlag = (PDWORD)(((PBYTE)peb_addr) + 0xBC);
+                DWORD NtGlobalFlagValue = *NtGlobalFlag;
+                cout << "NtGlobalFlag value is: " << NtGlobalFlagValue << endl;
+                if (NtGlobalFlagValue == 0)
                     return 0;
-                else if (value == NT_GLOBAL_FLAG_DEBUGGED)
+                else if (NtGlobalFlagValue & NT_GLOBAL_FLAG_DEBUGGED)
                     return 1;
                 else
                     return -1;
@@ -86,5 +86,3 @@ int IsDebugged() {
         }
     }
 }
-
-
