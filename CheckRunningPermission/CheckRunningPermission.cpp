@@ -44,7 +44,7 @@ int main()
 {
     auto isAdmin = IsUserAdmin2();
     if (isAdmin == TRUE) {
-        cout << "running as administrator" << endl;
+        cout << "running as administrator - TTD recording found!" << endl;
     }
     else if (isAdmin == FALSE) {
         cout << "not running as administrator" << endl;
