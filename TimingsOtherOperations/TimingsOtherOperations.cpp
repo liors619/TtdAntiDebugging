@@ -68,7 +68,6 @@ int main()
         std::chrono::steady_clock::time_point endTime;
 
         system("pause");
-
         startTime = std::chrono::steady_clock::now();
         RunExceptionThrowing();
         endTime = std::chrono::steady_clock::now();
@@ -76,25 +75,21 @@ int main()
         cout << "exception time in seconds: " << elapsed_seconds.count() << endl;
 
         system("pause");
-
         startTime = std::chrono::steady_clock::now();
         NewAndDelete();
         endTime = std::chrono::steady_clock::now();
         elapsed_seconds = endTime - startTime;
         cout << "create and delete objects time in seconds: " << elapsed_seconds.count() << endl;
-
+        
         system("pause");
-
         startTime = std::chrono::steady_clock::now();
         OpenAndCloseFiles();
         endTime = std::chrono::steady_clock::now();
         elapsed_seconds = endTime - startTime;
         auto elapsed_ticks = endTime - startTime;
-        //cout << "open and close files time in ticks: " << elapsed_ticks.count() << endl;
         cout << "open and close files time in seconds: " << elapsed_seconds.count() << endl;
 
         system("pause");
-
         startTime = std::chrono::steady_clock::now();
         LoadAndUnloadLibraries();
         endTime = std::chrono::steady_clock::now();
@@ -102,13 +97,11 @@ int main()
         cout << "load and unload libraries time in seconds: " << elapsed_seconds.count() << endl;
 
         system("pause");
-
         startTime = std::chrono::steady_clock::now();
         CreateAndRunThreads();
         endTime = std::chrono::steady_clock::now();
         elapsed_seconds = endTime - startTime;
         cout << "threads time in seconds: " << elapsed_seconds.count() << endl;
-
 
         system("pause");
         printf("\n\n");
