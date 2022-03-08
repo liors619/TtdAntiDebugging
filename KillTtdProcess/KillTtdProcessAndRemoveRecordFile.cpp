@@ -10,10 +10,16 @@
 #include <sys/stat.h>
 #include <string>
 #include <fstream>
+#include <filesystem>
+#include <Psapi.h>
 
+using recursive_directory_iterator = std::filesystem::recursive_directory_iterator;
 using namespace std;
 
-#include <string>
+
+
+
+string str2;
 
 std::wstring s2ws(const std::string& s)
 {
@@ -104,30 +110,35 @@ bool IsFileExists(const std::string& name) {
     return f.good();
 }
 
-// we can remove only run to remove the recording
-// we remove the out so the next time they try to record our program it'll get the number 01 
-void DeleteRecordFiles() {
-    if (IsFileExists("D:\\Users\\Lior\\Downloads\\D_downloads\\ttdProject\\Records\\RemoveRecordFileWithAnotherProcess01.run")){
-        if (std::remove("D:\\Users\\Lior\\Downloads\\D_downloads\\ttdProject\\Records\\RemoveRecordFileWithAnotherProcess01.run") == 0) {
-            std::remove("D:\\Users\\Lior\\Downloads\\D_downloads\\ttdProject\\Records\\RemoveRecordFileWithAnotherProcess01.out");
-            std::remove("D:\\Users\\Lior\\Downloads\\D_downloads\\ttdProject\\Records\\RemoveRecordFileWithAnotherProcess01.idx");
-            printf("record file deleted.\n");
+string GetCurrentExecutableNameWithoutExtension() {
+    char processExeName[MAX_PATH];
+    GetModuleBaseNameA(GetCurrentProcess(), 0, processExeName, MAX_PATH);
+    string processExeNameAsString(processExeName);
+    return processExeNameAsString.substr(0, processExeNameAsString.find_last_of('.'));
+}
+
+void DeleteRecordFiles(string recordedProgramName) {
+    string exeNameWithoutExtension = GetCurrentExecutableNameWithoutExtension();
+
+    for (const auto& dirEntry : recursive_directory_iterator("D:\\", filesystem::directory_options::skip_permission_denied)) {
+        try {
+            // we can check what our process name so researcher could not change it
+            if (dirEntry.path().filename().string()._Starts_with(recordedProgramName) &&
+                dirEntry.path().filename().extension().string() == ".run") {
+                std::remove(dirEntry.path().string().c_str());
+            }
         }
-        else {
-            printf("remove method failed.\n");
-        }
-    }
-    else {
-        printf("record file not found.\n");
+        catch (exception& ex) {}
     }
 }
 
-int main(int argc, TCHAR* argv[])
+int main(int argc, char* argv[])
 {
+    std::string recordedProgramName(argv[1]);
+
     Sleep(1000);
     KillProcess("DbgX.Shell.exe"); //kill windbg process
     Sleep(1000);
-    DeleteRecordFiles();
-    startup("D:\\Users\\Lior\\Downloads\\D_downloads\\TtdSolution\\x64\\Debug\\RemoveRecordFileWithAnotherProcess.exe", argv);
+    DeleteRecordFiles(recordedProgramName);
 }
 

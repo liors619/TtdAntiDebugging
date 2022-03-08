@@ -3,10 +3,13 @@
 
 #include <iostream>
 #include <Windows.h>
+#include <Psapi.h>
+#include <string>
 
 using namespace std;
 
-#include <string>
+
+
 
 std::wstring s2ws(const std::string& s)
 {
@@ -53,21 +56,29 @@ VOID startup(std::string exePath, TCHAR* argv[])
     CloseHandle(pi.hThread);
 }
 
+string GetCurrentExecutableNameWithoutExtension() {
+    char processExeName[MAX_PATH];
+    GetModuleBaseNameA(GetCurrentProcess(), 0, processExeName, MAX_PATH);
+    string processExeNameAsString(processExeName);
+    return processExeNameAsString.substr(0, processExeNameAsString.find_last_of('.'));
+}
+
 bool IsRecorded() {
     return FindWindowA(NULL, "Recording") != NULL;
+}
+
+void RunProcessToRemoveRecordFile() {
+    HWND dummyHWND = ::CreateWindowA("STATIC", "dummy", WS_VISIBLE, 0, 0, 100, 100, NULL, NULL, NULL, NULL);
+    ShellExecute(dummyHWND, (s2ws("open")).c_str(), s2ws("D:\\Users\\Lior\\Downloads\\D_downloads\\TtdSolutions\\x64\\Debug\\KillTtdProcessAndRemoveRecordFile.exe").c_str(), s2ws(GetCurrentExecutableNameWithoutExtension()).c_str(), NULL, SW_SHOWDEFAULT);
 }
 
 
 int main(int argc, TCHAR* argv[])
 {
-
-
     std::cout << "Hello World!\n";
-    while (true) {
-        Sleep(8000);
-        if (IsRecorded()) {
-            startup("D:\\Users\\Lior\\Downloads\\D_downloads\\TtdSolution\\x64\\Debug\\KillTtdProcessAndRemoveRecordFile.exe", argv);
-            return 0;
-        }
-    }
+    system("pause");
+    if (IsRecorded())
+        RunProcessToRemoveRecordFile();
+        
+    return 0;
 }
