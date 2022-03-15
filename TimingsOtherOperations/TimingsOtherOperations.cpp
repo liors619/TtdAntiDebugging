@@ -51,7 +51,7 @@ void methodForNewThread() {
     delete intP;
 }
 
-void CreateAndRunThreads() {
+void CreateAndRunThreadsWithNews() {
     for (size_t i = 0; i < 10000; i++)
     {
         std::thread t1(methodForNewThread);
@@ -98,7 +98,7 @@ int main()
 
         system("pause");
         startTime = std::chrono::steady_clock::now();
-        CreateAndRunThreads();
+        CreateAndRunThreadsWithNews();
         endTime = std::chrono::steady_clock::now();
         elapsed_seconds = endTime - startTime;
         cout << "threads time in seconds: " << elapsed_seconds.count() << endl;
