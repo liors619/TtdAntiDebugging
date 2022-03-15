@@ -65,8 +65,8 @@ int main()
 }
 
 void threadFunc() {
-    HideThread(GetCurrentThread());
-    // if the method success we should see the "sometimes" prints
+    HideThread(NULL);
+    // if the method success we should not see the "sometimes" prints
     printf("something\n");
     printf("something\n");
     printf("something\n");

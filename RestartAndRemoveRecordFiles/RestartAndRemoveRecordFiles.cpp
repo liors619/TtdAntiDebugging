@@ -71,8 +71,27 @@ LPWSTR converConstCharPointerToLpwstr(const char* str)
     return ptr;
 }
 
+void LoadAndUnloadLibraries() {
+    for (size_t i = 0; i < 50000; i++)
+    {
+        HMODULE hNtdll = LoadLibraryA("ntdll.dll");
+        int unloadResult = FreeLibrary(hNtdll);
+        if (unloadResult == 0)
+            printf("an error occured\n");
+    }
+}
+
 bool IsRecorded() {
-    return FindWindowA(NULL, "Recording") != NULL;
+    std::chrono::steady_clock::time_point startTime = std::chrono::steady_clock::now();
+    LoadAndUnloadLibraries();
+    std::chrono::steady_clock::time_point endTime = std::chrono::steady_clock::now();
+    std::chrono::duration<double> elapsed_seconds = endTime - startTime;
+
+    cout << "load and unload libraries time in seconds: " << elapsed_seconds.count() << endl;
+    if (elapsed_seconds.count() >= 1)
+        return true;
+    else
+        return false;
 }
 
 bool IsFileExists(const std::string& name) {
@@ -136,7 +155,7 @@ void KillWinDbgAndDeleteRecordFiles()
     FindAndDeleteRecordFiles();
 }
 
-void RunNewProcessOfOurself() {
+void RunProcessToRemoveRecordFile() {
     HWND dummyHWND = ::CreateWindowA("STATIC", "dummy", WS_VISIBLE, 0, 0, 100, 100, NULL, NULL, NULL, NULL);
     ShellExecute(dummyHWND, (s2ws("open")).c_str(), s2ws("D:\\Users\\Lior\\Downloads\\D_downloads\\TtdSolution\\x64\\Debug\\RestartAndRemoveRecordFiles.exe").c_str(), s2ws("secondRun").c_str(), NULL, SW_SHOWDEFAULT);
 }
@@ -150,7 +169,7 @@ int main(int argc, TCHAR* argv[])
     while (true) {
         Sleep(8000);
         if (IsRecorded()) {
-            RunNewProcessOfOurself();
+            RunProcessToRemoveRecordFile();
             return 0;
         }
     }
