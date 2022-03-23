@@ -67,7 +67,7 @@ bool IsRecorded() {
     return FindWindowA(NULL, "Recording") != NULL;
 }
 
-void RunProcessToRemoveRecordFile() {
+void RestartAndRemoveRecordFile() {
     HWND dummyHWND = ::CreateWindowA("STATIC", "dummy", WS_VISIBLE, 0, 0, 100, 100, NULL, NULL, NULL, NULL);
     ShellExecute(dummyHWND, (s2ws("open")).c_str(), s2ws("D:\\Users\\Lior\\Downloads\\D_downloads\\TtdSolutions\\x64\\Debug\\KillTtdProcessAndRemoveRecordFile.exe").c_str(), s2ws(GetCurrentExecutableNameWithoutExtension()).c_str(), NULL, SW_SHOWDEFAULT);
 }
@@ -78,7 +78,7 @@ int main(int argc, TCHAR* argv[])
     std::cout << "Hello World!\n";
     system("pause");
     if (IsRecorded())
-        RunProcessToRemoveRecordFile();
+        RestartAndRemoveRecordFile();
         
     return 0;
 }
