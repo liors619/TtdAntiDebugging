@@ -10,6 +10,8 @@
 #include <Psapi.h>
 #include <filesystem>
 
+#define SOME_TIME_TO_WAIT 8000
+
 using recursive_directory_iterator = std::filesystem::recursive_directory_iterator;
 using namespace std;
 
@@ -155,9 +157,10 @@ void KillWinDbgAndDeleteRecordFiles()
     FindAndDeleteRecordFiles();
 }
 
-void RunProcessToRemoveRecordFile() {
+void RestartAndRemoveRecordFile() {
     HWND dummyHWND = ::CreateWindowA("STATIC", "dummy", WS_VISIBLE, 0, 0, 100, 100, NULL, NULL, NULL, NULL);
     ShellExecute(dummyHWND, (s2ws("open")).c_str(), s2ws("D:\\Users\\Lior\\Downloads\\D_downloads\\TtdSolution\\x64\\Debug\\RestartAndRemoveRecordFiles.exe").c_str(), s2ws("secondRun").c_str(), NULL, SW_SHOWDEFAULT);
+    exit(0);
 }
 
 int main(int argc, TCHAR* argv[])
@@ -165,11 +168,11 @@ int main(int argc, TCHAR* argv[])
     if (IsNotFirstCall(argc))
         KillWinDbgAndDeleteRecordFiles();
 
-    cout << "Hello World!" << endl;
     while (true) {
-        Sleep(8000);
+        Sleep(SOME_TIME_TO_WAIT);
+
         if (IsRecorded()) {
-            RunProcessToRemoveRecordFile();
+            RestartAndRemoveRecordFile();
             return 0;
         }
     }
